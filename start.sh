@@ -27,6 +27,8 @@ ListenHTTPS
     xHTTP 1
     Address 0.0.0.0
     Port    443
+    DisableSSLv2
+    DisableSSLv3
 EOF
 for c in /etc/ssl/private/*.pem; do
    echo "    Cert    \"$c\"" >> /etc/pound/pound.cfg
@@ -34,7 +36,6 @@ done
 cat>>/etc/pound/pound.cfg<<EOF
     
     Ciphers "ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH"
-    
     
     Service
         HeadRequire "Host:.*"
