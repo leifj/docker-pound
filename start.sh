@@ -29,6 +29,8 @@ ListenHTTPS
     Port    443
     DisableSSLv2
     DisableSSLv3
+    HeadRemove "X-Forwarded-Proto"
+    AddHeader "X-Forwarded-Proto: https"
 EOF
 for c in /etc/ssl/private/*.pem; do
    echo "    Cert    \"$c\"" >> /etc/pound/pound.cfg
