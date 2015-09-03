@@ -13,6 +13,10 @@ if [ "x${BACKEND_PORT}" != "x" ]; then
    HTTP_PORT=`echo "${BACKEND_PORT}" | sed 's%/%%g' | awk -F: '{ print $3 }'`
 fi
 
+if [ "x${REWRITE_LOCATION}" = "x" ]; then
+   REWRITE_LOCATION=1
+fi
+
 mkdir -p /var/run/pound
 
 cat>/etc/pound/pound.cfg<<EOF
@@ -31,6 +35,7 @@ ListenHTTPS
     DisableSSLv3
     HeadRemove "X-Forwarded-Proto"
     AddHeader "X-Forwarded-Proto: https"
+    RewriteLocation ${REWRITE_LOCATION}
 EOF
 for c in /etc/ssl/private/*.pem; do
    echo "    Cert    \"$c\"" >> /etc/pound/pound.cfg
