@@ -1,5 +1,5 @@
 
-VER=latest
+VER=2.7
 
 all: build push
 build:
